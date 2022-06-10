@@ -14,6 +14,16 @@ class _LoginPageState extends State<LoginPage> {
   final String loginPage = '/login';
   TextEditingController UserName = TextEditingController();
   TextEditingController Welcome = TextEditingController();
+  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+
+  func() {
+    final form = _formkey.currentState!;
+    if (form.validate())
+      setState(() {
+        Navigator.pushNamed(context, MyRoute.homePage);
+      });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,59 +57,77 @@ class _LoginPageState extends State<LoginPage> {
                 fit: BoxFit.contain,
               ),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: TextFormField(
-                    controller: UserName,
-                    decoration: InputDecoration(
-                      labelText: 'UserName',
-                      hintText: 'Enter UserName',
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: TextFormField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      hintText: 'Enter Password',
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 40,
-                ),
-                InkWell(
-                  onTap: () {
-                    //Navigator.pushNamed(context, MyRoute.homePage);
-                  },
-                  child: AnimatedContainer(
-                    duration: Duration(seconds: 1),
-                    decoration: BoxDecoration(
-                      color: Colors.deepPurple,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    width: 150,
-                    height: 50,
-                    child: Center(
-                      child: Text(
-                        "LOGIN",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
+            Form(
+              key: _formkey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Username cannot be empty";
+                        }
+                        return null;
+                      },
+                      controller: UserName,
+                      decoration: InputDecoration(
+                        labelText: 'UserName',
+                        hintText: 'Enter UserName',
                       ),
                     ),
                   ),
-                )
-              ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Password cannot be empty";
+                        }
+                        if (value.length < 6) {
+                          return "Password length should be 6 atleast";
+                        }
+                        return null;
+                      },
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        labelText: 'Password',
+                        hintText: 'Enter Password',
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 40,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      func();
+                    },
+                    child: Ink(
+                      //duration: Duration(seconds: 1),
+                      decoration: BoxDecoration(
+                        color: Colors.deepPurple,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      width: 150,
+                      height: 50,
+                      child: Center(
+                        child: Text(
+                          "LOGIN",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ],
         ),
