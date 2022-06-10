@@ -4,9 +4,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'homepage.dart';
 import 'package:shopapp/utils/routefile.dart';
 
-class LoginPage extends StatelessWidget {
-  //const LoginPage({Key? key}) : super(key: key);
+class LoginPage extends StatefulWidget {
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  // LoginPage({Key? key}) : super(key: key);
   final String loginPage = '/login';
+  TextEditingController UserName = TextEditingController();
+  TextEditingController Welcome = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +29,8 @@ class LoginPage extends StatelessWidget {
             ),
             Center(
               child: Text(
-                'WELCOME',
+                //'WELCOME',
+                Welcome.text = "WELCOME",
                 style: GoogleFonts.lato(
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
@@ -46,6 +54,7 @@ class LoginPage extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: TextFormField(
+                    controller: UserName,
                     decoration: InputDecoration(
                       labelText: 'UserName',
                       hintText: 'Enter UserName',
@@ -66,18 +75,28 @@ class LoginPage extends StatelessWidget {
                 SizedBox(
                   height: 40,
                 ),
-                ElevatedButton(
-                  style: TextButton.styleFrom(
-                    minimumSize: Size(150, 40),
-
-                    // foregroundColor: MaterialStateProperty<Color>(),
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, MyRoute.homePage);
+                InkWell(
+                  onTap: () {
+                    //Navigator.pushNamed(context, MyRoute.homePage);
                   },
-                  child: Text(
-                    ' LOGIN ',
-                    style: GoogleFonts.lato(color: Colors.white),
+                  child: AnimatedContainer(
+                    duration: Duration(seconds: 1),
+                    decoration: BoxDecoration(
+                      color: Colors.deepPurple,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    width: 150,
+                    height: 50,
+                    child: Center(
+                      child: Text(
+                        "LOGIN",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
                   ),
                 )
               ],
