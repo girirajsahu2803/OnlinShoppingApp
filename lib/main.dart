@@ -3,6 +3,7 @@ import 'package:shopapp/pages/homepage.dart';
 import 'package:shopapp/pages/secondScreen.dart';
 import 'package:shopapp/pages/loginpage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shopapp/utils/routefile.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,16 +15,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/logIn',
+      initialRoute: MyRoute.loginPage,
       theme: ThemeData(
         fontFamily: GoogleFonts.lato().fontFamily,
         primarySwatch: Colors.purple,
         primaryTextTheme: GoogleFonts.latoTextTheme(),
       ),
       routes: {
-        '/': (context) => HomePage(),
+        MyRoute.homePage: (context) => HomePage(),
         '/2': (context) => SecondScreen(),
-        '/logIn': (context) => LoginPage(),
+        MyRoute.loginPage: (context) => LoginPage(),
       },
     );
   }

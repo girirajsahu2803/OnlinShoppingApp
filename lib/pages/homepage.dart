@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shopapp/utils/routefile.dart';
 
 class HomePage extends StatelessWidget {
+  final String homepage = "/";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
