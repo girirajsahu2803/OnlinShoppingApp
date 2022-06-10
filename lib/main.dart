@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shopapp/homepage.dart';
+import 'package:shopapp/pages/homepage.dart';
+import 'package:shopapp/pages/secondScreen.dart';
+import 'package:shopapp/pages/loginpage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,6 +12,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HomePage();
+    return MaterialApp(
+      initialRoute: '/',
+      theme: ThemeData(primarySwatch: Colors.purple),
+      routes: {
+        '/': (context) => HomePage(),
+        '/2': (context) => SecondScreen(),
+        '/logIn': (context) => LoginPage(),
+      },
+    );
   }
 }
