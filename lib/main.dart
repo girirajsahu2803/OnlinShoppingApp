@@ -15,10 +15,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: MyRoute.loginPage,
+      initialRoute: MyRoute.homePage,
       theme: ThemeData(
         fontFamily: GoogleFonts.lato().fontFamily,
-        primarySwatch: Colors.purple,
+        primarySwatch: Colors.deepPurple,
         primaryTextTheme: GoogleFonts.latoTextTheme(),
       ),
       routes: {
