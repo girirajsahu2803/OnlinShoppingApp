@@ -8,21 +8,24 @@ class ItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 0.5,
-      child: ListTile(
-        title: Text(
-          item!.name,
-          textScaleFactor: 1.2,
-          style: TextStyle(color: Colors.black),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListTile(
+          title: Text(
+            item!.name.toString(),
+            textScaleFactor: 1.2,
+            style: TextStyle(color: Colors.black),
+          ),
+          subtitle: Text(
+            item!.desc.toString(),
+            style: TextStyle(color: Colors.black45),
+          ),
+          trailing: Text(
+            "Rs. " + item!.price.toString(),
+            style: TextStyle(color: Colors.purple, fontWeight: FontWeight.w600),
+          ),
+          leading: Image.network(item!.image.toString()),
         ),
-        subtitle: Text(
-          item!.desc,
-          style: TextStyle(color: Colors.black45),
-        ),
-        trailing: Text(
-          "Rs. " + item!.price.toString(),
-          style: TextStyle(color: Colors.purple, fontWeight: FontWeight.w600),
-        ),
-        leading: Image.network(item!.image),
       ),
     );
   }
