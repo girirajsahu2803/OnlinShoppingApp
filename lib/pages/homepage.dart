@@ -4,6 +4,7 @@ import 'package:shopapp/utils/routefile.dart';
 import 'package:shopapp/widgets/drawer.dart';
 import 'package:shopapp/models/catalog.dart';
 import 'package:shopapp/widgets/itemWidget.dart';
+import 'package:shopapp/widgets/gridTile.dart';
 import 'dart:convert';
 
 class HomePage extends StatefulWidget {
@@ -49,13 +50,16 @@ class _HomePageState extends State<HomePage> {
         padding: const EdgeInsets.all(16.0),
         child:
             (CatalogModel.products != null && CatalogModel.products.isNotEmpty)
-                ? ListView.builder(
+                ? GridView.builder(
                     itemCount: CatalogModel.products.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisSpacing: 5,
+                        mainAxisSpacing: 16,
+                        crossAxisCount: 2),
                     itemBuilder: (context, index) {
-                      return ItemWidget(
-                        item: CatalogModel.products[index],
-                      );
-                    })
+                      return GridTileWidget(item: CatalogModel.products[index]);
+                    },
+                  )
                 : Center(
                     child: CircularProgressIndicator(),
                   ),
