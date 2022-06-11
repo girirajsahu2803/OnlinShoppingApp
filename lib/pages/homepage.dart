@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shopapp/utils/routefile.dart';
 import 'package:shopapp/widgets/drawer.dart';
+import 'package:shopapp/models/catalog.dart';
+import 'package:shopapp/widgets/itemWidget.dart';
 
 class HomePage extends StatelessWidget {
   final String homepage = "/";
@@ -16,14 +18,17 @@ class HomePage extends StatelessWidget {
         ),
       ),
       body: Container(
-        //color: Colors.red,
-        child: Center(
-          child: Text(
-            'hello',
-            style: TextStyle(color: Colors.blueAccent),
-          ),
-        ),
-      ),
+          //color: Colors.red,
+          child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ListView.builder(
+            itemCount: CatalogModel.products.length,
+            itemBuilder: (context, index) {
+              return ItemWidget(
+                item: CatalogModel.products[index],
+              );
+            }),
+      )),
     );
   }
 }
