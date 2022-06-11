@@ -7,9 +7,13 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawerEdgeDragWidth: 150,
       drawer: MyDrawer(),
       appBar: AppBar(
-        title: Text('APP', style: TextStyle(color: Colors.white)),
+        title: const Text(
+          ' Catalog App',
+          style: TextStyle(color: Colors.black),
+        ),
       ),
       body: Container(
         //color: Colors.red,
