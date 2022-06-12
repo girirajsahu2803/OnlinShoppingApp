@@ -12,6 +12,7 @@ class CatalogModel {
     //           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRISJ6msIu4AU9_M9ZnJVQVFmfuhfyJjEtbUm3ZK11_8IV9TV25-1uM5wHjiFNwKy99w0mR5Hk&usqp=CAc")
     //
   ];
+  static List<Item> Catalogproducts = [];
 }
 
 class Item {

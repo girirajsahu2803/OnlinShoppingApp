@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shopapp/pages/DetailPageScreen.dart';
+import 'package:shopapp/pages/cartPage.dart';
 import 'package:shopapp/pages/homepage.dart';
 import 'package:shopapp/pages/secondScreen.dart';
 import 'package:shopapp/pages/loginpage.dart';
@@ -18,13 +19,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: MyRoute.homePage,
+      themeMode: ThemeMode.system,
+      initialRoute: MyRoute.loginPage,
       theme: MyTheme.lightThemeData,
+      darkTheme: MyTheme.darkThemeData,
       routes: {
         MyRoute.homePage: (context) => HomePage(),
         '/2': (context) => SecondScreen(),
         MyRoute.loginPage: (context) => LoginPage(),
         MyRoute.detailPage: (context) => DetailPage(),
+        MyRoute.CartPage: (context) => CartPage(),
       },
     );
   }

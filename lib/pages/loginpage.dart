@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:velocity_x/velocity_x.dart';
 import 'homepage.dart';
 import 'package:shopapp/utils/routefile.dart';
 

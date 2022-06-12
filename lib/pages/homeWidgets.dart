@@ -15,8 +15,8 @@ class CatalogHeader extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        "Catalog App".text.color(MyTheme.darkBlusish).xl5.bold.make(),
-        "Trending Products".text.color(MyTheme.darkBlusish).xl2.make(),
+        "Catalog App".text.color(context.theme.accentColor).xl5.bold.make(),
+        "Trending Products".text.color(context.theme.accentColor).xl2.make(),
       ],
     );
   }
@@ -53,8 +53,12 @@ class CatalogItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                catalog!.name!.text.xl.color(MyTheme.darkBlusish).bold.make(),
-                catalog!.desc!.text.black
+                catalog!.name!.text.xl
+                    .color(context.theme.accentColor)
+                    .bold
+                    .make(),
+                catalog!.desc!.text
+                    .color(context.theme.accentColor)
                     .textStyle(context.captionStyle)
                     .make(),
                 10.heightBox,
@@ -66,8 +70,10 @@ class CatalogItem extends StatelessWidget {
                             style: ButtonStyle(
                               shape: MaterialStateProperty.all(StadiumBorder()),
                             ),
-                            onPressed: () {},
-                            child: "Buy".text.make())
+                            onPressed: () {
+                              CatalogModel.Catalogproducts.add(catalog!);
+                            },
+                            child: "Cart".text.make())
                         .pOnly(right: 8),
                   ],
                 ),
@@ -75,7 +81,7 @@ class CatalogItem extends StatelessWidget {
             ))
           ],
         ),
-      ).square(150).roundedSM.white.make().py(5),
+      ).square(150).roundedSM.color(context.theme.cardColor).make().py(5),
     );
   }
 }
@@ -106,7 +112,15 @@ class CatalogImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Image.network(
       catalog,
-      fit: BoxFit.fill,
-    ).box.rounded.color(MyTheme.creamColor).make().p8().w40(context);
+      //color: Colors.black,
+      fit: BoxFit.contain,
+    )
+        .box
+        .clip(Clip.antiAlias)
+        .roundedLg
+        .color(context.cardColor)
+        .make()
+        .p8()
+        .w40(context);
   }
 }
