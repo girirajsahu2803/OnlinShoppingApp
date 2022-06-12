@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopapp/widgets/itemWidget.dart';
 import 'package:shopapp/models/catalog.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class GridTileWidget extends StatelessWidget {
   GridTileWidget({required this.item});
