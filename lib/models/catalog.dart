@@ -13,6 +13,18 @@ class CatalogModel {
     //
   ];
   static List<Item> Catalogproducts = [];
+
+  ///get ITEM BY ID
+  static Item? getByID(int id) {
+    products.firstWhere((element) {
+      return element.id == id;
+    });
+  }
+
+  ///get ITEM BY POSITION
+  static Item getByPosition(int pos) {
+    return products[pos];
+  }
 }
 
 class Item {
