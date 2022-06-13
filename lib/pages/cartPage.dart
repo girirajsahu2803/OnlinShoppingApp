@@ -34,6 +34,7 @@ class CartPage extends StatelessWidget {
 class CardList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    VxState.watch(context, on: [RemoveMutation]);
     final CartModel? _cart = (VxState.store as MyStore).cart;
     return ListView.builder(
         shrinkWrap: true,
@@ -51,7 +52,7 @@ class CardList extends StatelessWidget {
             trailing: IconButton(
               icon: Icon(Icons.remove_circle_outline),
               onPressed: () {
-                _cart?.remove(_cart.items[index]);
+                RemoveMutation(item: _cart?.items[index]);
               },
             ),
           );
@@ -70,7 +71,11 @@ class CartTotal extends StatelessWidget {
         //crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           //${cart?.getTotalPrice()}
-          "\$ ${_cart?.totalPrice()}".text.xl4.make().px(10),
+          VxConsumer(
+              builder: (context, _, status) {
+                return "\$ ${_cart?.totalPrice()}".text.xl4.make();
+              },
+              mutations: {AddMutation, RemoveMutation}).px(10),
           30.widthBox,
           ElevatedButton(
                   onPressed: () {
