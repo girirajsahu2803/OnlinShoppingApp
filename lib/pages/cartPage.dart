@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shopapp/widgets/themes.dart';
+import 'package:shopapp/models/cart.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:shopapp/core/store.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({Key? key}) : super(key: key);
@@ -8,66 +9,78 @@ class CartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: ButtonBar(
+        alignment: MainAxisAlignment.spaceBetween,
+        children: [
+          CartTotal(),
+        ],
+      ),
       backgroundColor: context.canvasColor,
       appBar: AppBar(
         title: "Cart".text.color(context.accentColor).xl2.make(),
         backgroundColor: Colors.transparent,
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           CardList(),
           Divider(),
-          CartTotal(),
         ],
-      ),
+      ).scrollVertical(),
     );
   }
 }
 
-class CartTotal extends StatelessWidget {
-  const CartTotal({Key? key}) : super(key: key);
-
+class CardList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final CartModel? _cart = (VxState.store as MyStore).cart;
+    return ListView.builder(
+        shrinkWrap: true,
+        itemCount: _cart?.items.length,
+        scrollDirection: Axis.vertical,
+        itemBuilder: (context, index) {
+          return ListTile(
+            leading: Icon(Icons.done),
+            title:
+                //cart.items[index]?.name?
+                _cart?.items[index]?.name?.text
+                        .color(context.accentColor)
+                        .make() ??
+                    "product".text.make(),
+            trailing: IconButton(
+              icon: Icon(Icons.remove_circle_outline),
+              onPressed: () {
+                _cart?.remove(_cart.items[index]);
+              },
+            ),
+          );
+        });
+  }
+}
+
+class CartTotal extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final CartModel? _cart = (VxState.store as MyStore).cart;
     return SizedBox(
       height: 150,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          "\$ 99999".text.xl4.make().px(10),
+          //${cart?.getTotalPrice()}
+          "\$ ${_cart?.totalPrice()}".text.xl4.make().px(10),
           30.widthBox,
           ElevatedButton(
                   onPressed: () {
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: "Buying Not Supported".text.make()));
                   },
-                  child: "Buy"
-                      .text
-                      .xl3
-                      .color(context.accentColor)
-                      .make()
-                      .px(30)
-                      .py(10))
+                  child: "Buy".text.xl3.white.make().px(30).py(10))
               .p(5),
         ],
       ),
     ).px(10);
-  }
-}
-
-class CardList extends StatelessWidget {
-  const CardList({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: 5,
-          scrollDirection: Axis.vertical,
-          itemBuilder: (context, index) {
-            return "item".text.make();
-          }),
-    );
   }
 }

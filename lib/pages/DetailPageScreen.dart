@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shopapp/models/cart.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:shopapp/models/catalog.dart';
+import 'package:shopapp/core/store.dart';
 import 'package:shopapp/widgets/themes.dart';
 import 'homeWidgets.dart';
 
@@ -16,26 +18,29 @@ class DetailPage extends StatelessWidget {
         child: ButtonBar(
           alignment: MainAxisAlignment.spaceBetween,
           children: [
-            "\$ ${catalog!.price!.toString()}".text.xl4.red800.bold.make().p1(),
+            "Rs.${catalog!.price!.toString()}".text.xl3.red800.bold.make(),
             ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.purple),
                       shape: MaterialStateProperty.all(StadiumBorder()),
                     ),
-                    onPressed: () {},
-                    child: "Cart".text.xl2.make())
+                    onPressed: () {
+                      final _cart = (VxState.store as MyStore).cart;
+                      AddMutation(item: catalog);
+                    },
+                    child: "Cart".text.xl.make())
                 .pOnly(right: 8)
                 .h(50)
-                .w(100),
+                .w(80),
             ElevatedButton(
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all(StadiumBorder()),
                     ),
                     onPressed: () {},
-                    child: "Buy".text.xl2.make())
+                    child: "Buy".text.xl.make())
                 .pOnly(right: 8)
                 .h(50)
-                .w(100),
+                .w(80),
           ],
         ).p(32),
       ),

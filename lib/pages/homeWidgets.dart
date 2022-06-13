@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shopapp/core/store.dart';
+import 'package:shopapp/models/cart.dart';
 import 'package:shopapp/pages/DetailPageScreen.dart';
-import 'package:shopapp/utils/routefile.dart';
-import 'package:shopapp/widgets/themes.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:shopapp/models/catalog.dart';
 
@@ -65,16 +65,8 @@ class CatalogItem extends StatelessWidget {
                 ButtonBar(
                   alignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    "\$ ${catalog!.price!.toString()}".text.bold.make(),
-                    ElevatedButton(
-                            style: ButtonStyle(
-                              shape: MaterialStateProperty.all(StadiumBorder()),
-                            ),
-                            onPressed: () {
-                              CatalogModel.Catalogproducts.add(catalog!);
-                            },
-                            child: "Cart".text.make())
-                        .pOnly(right: 8),
+                    "Rs. ${catalog!.price!.toString()}".text.bold.make(),
+                    AddToCartButton(catalogitem: catalog).pOnly(right: 8),
                   ],
                 ),
               ],
@@ -83,6 +75,25 @@ class CatalogItem extends StatelessWidget {
         ),
       ).square(150).roundedSM.color(context.theme.cardColor).make().py(5),
     );
+  }
+}
+
+class AddToCartButton extends StatelessWidget {
+  AddToCartButton({this.catalogitem});
+  Item? catalogitem;
+  @override
+  Widget build(BuildContext context) {
+    VxState.watch(context, on: [AddMutation]);
+    final CartModel? _cart = (VxState.store as MyStore).cart;
+    bool isInCart = _cart?.items.contains(catalogitem) ?? false;
+    return ElevatedButton(
+        style: ButtonStyle(
+          shape: MaterialStateProperty.all(StadiumBorder()),
+        ),
+        onPressed: () {
+          AddMutation(item: catalogitem);
+        },
+        child: (isInCart) ? Icon(Icons.done) : "Cart".text.make());
   }
 }
 

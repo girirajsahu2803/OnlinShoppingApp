@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shopapp/models/catalog.dart';
 import 'package:shopapp/utils/routefile.dart';
-import 'package:shopapp/widgets/themes.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'dart:convert';
 import 'homeWidgets.dart';
