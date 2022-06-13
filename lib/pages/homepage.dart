@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shopapp/core/store.dart';
+import 'package:shopapp/models/cart.dart';
 import 'package:shopapp/models/catalog.dart';
 import 'package:shopapp/utils/routefile.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'dart:convert';
 import 'homeWidgets.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   @override
@@ -13,6 +16,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final String homepage = "/";
+  //final url = "https://api.jsonbin.io/b/604dbddb683e7e079c4eefd3";
   @override
   initState() {
     super.initState();
@@ -22,7 +26,10 @@ class _HomePageState extends State<HomePage> {
   localData() async {
     await Future.delayed(Duration(seconds: 2));
     var catalogJson = await rootBundle.loadString("files/catalog.json");
-    print(catalogJson);
+    //final response = await http.get(Uri.parse(url));
+
+    // var catalogJson = response.body;
+    //print(response.statusCode);
     var decodedData = jsonDecode(catalogJson);
     var productData = decodedData["products"];
     setState(() {
@@ -34,17 +41,22 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final _cart = (VxState.store as MyStore).cart;
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: context.theme.buttonColor,
-        onPressed: () {
-          Navigator.pushNamed(context, MyRoute.CartPage);
-        },
-        child: Icon(
-          Icons.shopping_cart,
-          color: Colors.white,
-        ),
-      ),
+      floatingActionButton: VxConsumer(
+          mutations: {AddMutation, RemoveMutation},
+          builder: (context, _, status) {
+            return FloatingActionButton(
+              backgroundColor: context.theme.buttonColor,
+              onPressed: () {
+                Navigator.pushNamed(context, MyRoute.CartPage);
+              },
+              child: Icon(
+                Icons.shopping_cart,
+                color: Colors.white,
+              ),
+            ).badge(color: Vx.red500, size: 20, count: _cart?.items.length);
+          }),
       backgroundColor: context.canvasColor,
       body: SafeArea(
         child: Container(
@@ -53,7 +65,7 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             //mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CatalogHeader(),
+              CatalogHeader().pOnly(bottom: 30),
               if (CatalogModel.products != null &&
                   CatalogModel.products.isNotEmpty)
                 CatalogList()
